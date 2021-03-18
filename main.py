@@ -7,7 +7,6 @@ from app import App
 if __name__ == '__main__':
     root = Tk()
     root.wm_title("Recording and streaming software")
-    #root.attributes('-zoomed', True)
     root.minsize(1024, 768)
     app = App(root)
     root.mainloop()

@@ -4,6 +4,7 @@ from tkinter import Menu
 class App:
     def __init__(self, root):
         self.root = root
+        self.maximized = False
 
         # menu
         self.menubar = Menu(root)
@@ -27,7 +28,8 @@ class App:
         pass
 
     def maximize(self):
-        pass
+        self.maximized = not self.maximized
+        self.root.attributes('-zoomed', self.maximized)
 
     def help(self):
         pass
