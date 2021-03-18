@@ -1,4 +1,7 @@
 from tkinter import Menu
+from tkinter import ttk, colorchooser, filedialog, messagebox
+
+from about import about
 
 
 class App:
@@ -18,11 +21,13 @@ class App:
 
         self.menubar.add_cascade(label="Soubor", menu=self.filemenu)
         self.menubar.add_cascade(label="Zobrazit", menu=self.view_menu)
-        self.menubar.add_command(label="Nápověda", command=self.help)
+        self.menubar.add_command(label="Informace", command=about)
         root.config(menu=self.menubar)
 
     def quit(self):
-        pass
+        end = messagebox.askyesno('Zavřít', 'Opravdu?')
+        if end:
+            self.root.quit()
 
     def settings(self):
         pass
@@ -30,6 +35,3 @@ class App:
     def maximize(self):
         self.maximized = not self.maximized
         self.root.attributes('-zoomed', self.maximized)
-
-    def help(self):
-        pass
