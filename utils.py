@@ -48,7 +48,7 @@ def create_sound_slider(root, name):
     im = Image.open("pictures/mute.png")
     im = im.resize((25, 25), Image.ANTIALIAS)
     ph = ImageTk.PhotoImage(im)
-    mute_button = Button(frame, image=ph)
+    mute_button = Button(frame, image=ph, command=lambda: scale.set(0))
     mute_button.image = ph
     label = Label(frame, text=name)
 
