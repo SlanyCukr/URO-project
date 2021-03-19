@@ -1,5 +1,6 @@
-from tkinter import Menu
+from tkinter import Menu, Label, Frame
 from tkinter import ttk, colorchooser, filedialog, messagebox
+from PIL import ImageTk, Image
 
 from about import about
 
@@ -23,6 +24,18 @@ class App:
         self.menubar.add_cascade(label="Zobrazit", menu=self.view_menu)
         self.menubar.add_command(label="Informace", command=about)
         root.config(menu=self.menubar)
+
+        # picture in middle
+        image = Image.open("desktop.png")
+        image = image.resize((900, 505), Image.ANTIALIAS)
+        image = ImageTk.PhotoImage(image)
+        label_image = Label(root, image=image)
+        label_image.image = image
+        label_image.pack(padx=100, pady=50)
+
+        # bottom
+        bottom_frame = Frame(root)
+
 
     def quit(self):
         end = messagebox.askyesno('Zavřít', 'Opravdu?')
