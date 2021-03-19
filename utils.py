@@ -1,14 +1,39 @@
 from tkinter import *
+from tkinter import simpledialog
 
 from PIL import ImageTk, Image
+
+
+def add_item(listbox: Listbox):
+    name = simpledialog.askstring(title="Please type answer.", prompt="What is the name of the item?")
+    listbox.insert(listbox.size() + 1, name)
+
+
+def remove_item(listbox: Listbox):
+    listbox.delete(listbox.curselection())
 
 
 def create_listbox(root, name):
     frame = Frame(root)
     label = Label(frame, text=name)
     listbox = Listbox(frame, bg='white')
+
+    plus = Image.open("plus.png")
+    plus = plus.resize((20, 20), Image.ANTIALIAS)
+    plus = ImageTk.PhotoImage(plus)
+    add_button = Button(frame, image=plus, command=lambda: add_item(listbox))
+    add_button.image = plus
+
+    minus = Image.open("minus.png")
+    minus = minus.resize((20, 20), Image.ANTIALIAS)
+    minus = ImageTk.PhotoImage(minus)
+    remove_button = Button(frame, image=minus, command=lambda: remove_item(listbox))
+    remove_button.image = minus
+
     label.pack()
     listbox.pack()
+    remove_button.pack(side=RIGHT)
+    add_button.pack(side=RIGHT)
 
     frame.pack(side=LEFT, padx=25, pady=10)
 
