@@ -289,7 +289,7 @@ def about():
 
     # left frame
     frame_left = Frame(win)
-    image = Image.open("rec.png")
+    image = Image.open("pictures/rec.png")
     image = image.resize((200, 200), Image.ANTIALIAS)
     image = ImageTk.PhotoImage(image)
     label_image = Label(frame_left, image=image)

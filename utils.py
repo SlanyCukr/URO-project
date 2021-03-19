@@ -18,13 +18,13 @@ def create_listbox(root, name):
     label = Label(frame, text=name)
     listbox = Listbox(frame, bg='white')
 
-    plus = Image.open("plus.png")
+    plus = Image.open("pictures/plus.png")
     plus = plus.resize((20, 20), Image.ANTIALIAS)
     plus = ImageTk.PhotoImage(plus)
     add_button = Button(frame, image=plus, command=lambda: add_item(listbox))
     add_button.image = plus
 
-    minus = Image.open("minus.png")
+    minus = Image.open("pictures/minus.png")
     minus = minus.resize((20, 20), Image.ANTIALIAS)
     minus = ImageTk.PhotoImage(minus)
     remove_button = Button(frame, image=minus, command=lambda: remove_item(listbox))
@@ -44,7 +44,7 @@ def create_sound_slider(root, name):
     frame = Frame(root)
     scale = Scale(frame, from_=0, to=100, orient=HORIZONTAL)
 
-    im = Image.open("mute.png")
+    im = Image.open("pictures/mute.png")
     im = im.resize((25, 25), Image.ANTIALIAS)
     ph = ImageTk.PhotoImage(im)
     mute_button = Button(frame, image=ph)

@@ -28,7 +28,7 @@ class App:
         root.config(menu=self.menubar)
 
         # picture in middle
-        image = Image.open("desktop.png")
+        image = Image.open("pictures/desktop.png")
         image = image.resize((900, 505), Image.ANTIALIAS)
         image = ImageTk.PhotoImage(image)
         label_image = Label(root, image=image)
