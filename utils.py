@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 
 
 def add_item(listbox: Listbox):
-    name = simpledialog.askstring(title="Please type answer.", prompt="What is the name of the item?")
+    name = simpledialog.askstring(title="Prosím napište odpověď", prompt="Jaké je jméno přidávané položky?")
     listbox.insert(listbox.size() + 1, name)
 
 
