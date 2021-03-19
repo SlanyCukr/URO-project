@@ -43,6 +43,7 @@ def create_listbox(root, name):
 def create_sound_slider(root, name):
     frame = Frame(root)
     scale = Scale(frame, from_=0, to=100, orient=HORIZONTAL)
+    scale.set(50)
 
     im = Image.open("pictures/mute.png")
     im = im.resize((25, 25), Image.ANTIALIAS)
