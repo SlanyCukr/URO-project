@@ -8,9 +8,12 @@ from utils import create_listbox, create_sound_slider
 
 
 class App:
-    def __init__(self, root):
+    def __init__(self, root: Tk):
         self.root = root
         self.maximized = False
+
+        # scale the picture when resizing -> IS BUGGY
+        self.root.bind("<Configure>", self.scale_picture)
 
         # menu
         self.menubar = Menu(root)
@@ -28,12 +31,13 @@ class App:
         root.config(menu=self.menubar)
 
         # picture in middle
+        self.ratio = 900 / 505
         image = Image.open("pictures/desktop.png")
         image = image.resize((900, 505), Image.ANTIALIAS)
-        image = ImageTk.PhotoImage(image)
-        label_image = Label(root, image=image)
-        label_image.image = image
-        label_image.pack(padx=50, pady=50, fill=BOTH, expand=1)
+        self.image = ImageTk.PhotoImage(image)
+        self.canvas_image = Canvas(root, width=900, height=505)
+        self.canvas_image.create_image(0, 0, image=self.image, anchor="nw")
+        self.canvas_image.pack(fill=BOTH, expand=True, padx=50, pady=50)
 
         # bottom
         bottom_frame = Frame(root)
@@ -65,10 +69,22 @@ class App:
         stream_button = Button(control_frame, text="Začít vysílat", width=15).pack(pady=(10, 0))
         record_button = Button(control_frame, text="Začít nahrávat", width=15).pack()
         settings_button = Button(control_frame, text="Nastavení", width=15).pack()
-        exit_button = Button(control_frame, text="Ukončit", width=15).pack()
+        exit_button = Button(control_frame, text="Ukončit", width=15, command=self.quit).pack()
         control_frame.pack(side=LEFT, padx=25, pady=10, fill=BOTH)
 
         bottom_frame.pack()
+
+    def scale_picture(self, event):
+        basewidth = self.canvas_image.winfo_width()
+        image = Image.open("pictures/desktop.png")
+        wpercent = (basewidth / float(image.size[0]))
+        hsize = int((float(image.size[1]) * float(wpercent)))
+        image = image.resize((basewidth, hsize), Image.ANTIALIAS)
+
+        #self.canvas_image.config(width=canvas_width, height=canvas_height)
+
+        self.image = ImageTk.PhotoImage(image)
+        self.canvas_image.create_image(0, 0, image=self.image, anchor="nw")
 
     def quit(self):
         end = messagebox.askyesno('Zavřít', 'Opravdu?')
