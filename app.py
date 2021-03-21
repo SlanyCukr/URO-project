@@ -4,6 +4,7 @@ from tkinter import messagebox
 from PIL import ImageTk, Image
 
 from about import about
+from settings import settings
 from utils import create_listbox, create_sound_slider
 
 
@@ -12,14 +13,14 @@ class App:
         self.root = root
         self.maximized = False
 
-        # scale the picture when resizing -> IS BUGGY
+        # scale the picture when resizing
         self.root.bind("<Configure>", self.scale_picture)
 
         # menu
         self.menubar = Menu(root)
 
         self.filemenu = Menu(self.menubar, tearoff=0)
-        self.filemenu.add_command(label="Nastavení", command=self.settings)
+        self.filemenu.add_command(label="Nastavení", command=settings)
         self.filemenu.add_command(label="Konec", command=self.quit)
 
         self.view_menu = Menu(self.menubar, tearoff=0)
@@ -31,7 +32,6 @@ class App:
         root.config(menu=self.menubar)
 
         # picture in middle
-        self.ratio = 900 / 505
         image = Image.open("pictures/desktop.png")
         image = image.resize((900, 505), Image.ANTIALIAS)
         self.image = ImageTk.PhotoImage(image)
@@ -68,7 +68,7 @@ class App:
         control_frame_label = Label(control_frame, text="Ovládací prvky").pack()
         stream_button = Button(control_frame, text="Začít vysílat", width=15).pack(pady=(10, 0))
         record_button = Button(control_frame, text="Začít nahrávat", width=15).pack()
-        settings_button = Button(control_frame, text="Nastavení", width=15).pack()
+        settings_button = Button(control_frame, text="Nastavení", width=15, command=settings).pack()
         exit_button = Button(control_frame, text="Ukončit", width=15, command=self.quit).pack()
         control_frame.pack(side=LEFT, padx=25, pady=10, fill=BOTH)
 
@@ -79,9 +79,12 @@ class App:
         image = Image.open("pictures/desktop.png")
         wpercent = (basewidth / float(image.size[0]))
         hsize = int((float(image.size[1]) * float(wpercent)))
-        image = image.resize((basewidth, hsize), Image.ANTIALIAS)
 
-        #self.canvas_image.config(width=canvas_width, height=canvas_height)
+        # handle closing the window error
+        if basewidth <= 0 or hsize <= 0:
+            return
+
+        image = image.resize((basewidth, hsize), Image.ANTIALIAS)
 
         self.image = ImageTk.PhotoImage(image)
         self.canvas_image.create_image(0, 0, image=self.image, anchor="nw")
@@ -90,9 +93,6 @@ class App:
         end = messagebox.askyesno('Zavřít', 'Opravdu?')
         if end:
             self.root.quit()
-
-    def settings(self):
-        pass
 
     def maximize(self):
         self.maximized = not self.maximized
